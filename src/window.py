@@ -177,15 +177,15 @@ class BrausWindow(Gtk.ApplicationWindow):
 
         infobuttonnever = Gtk.Button.new_with_label(_("Never ask again"))
         Gtk.StyleContext.add_class(infobuttonnever.get_style_context(), Gtk.STYLE_CLASS_FLAT)
-        
+
         infobar.add_action_widget(infobuttonnever, Gtk.ResponseType.REJECT)
         infobar.add_button (_("Set as Default"), Gtk.ResponseType.ACCEPT)
-        
-        
+
+
 
         if app.settings.get_boolean("ask-default") == True and Gio.AppInfo.get_default_for_type(app.content_types[1], True).get_id() != Gio.Application.get_application_id(app) + '.desktop' :
             outerbox.add(infobar)
-        
+
 
         # Get all apps which are registered as browsers
         browsers = Gio.AppInfo.get_all_for_type(app.content_types[1])
@@ -206,7 +206,7 @@ class BrausWindow(Gtk.ApplicationWindow):
             # Remove Braus from the list of browsers
             if Gio.Application.get_application_id(app) + '.desktop' == browser.get_id() :
                 continue
-            
+
 
             #put the current one in the loop, in a dict
             appslist.update({browser.get_id() : browser})
@@ -274,8 +274,7 @@ class BrausWindow(Gtk.ApplicationWindow):
 
             except GLib.Error:
                 print("error")
-        
+
         elif response_id == Gtk.ResponseType.REJECT:
             #don't ask again
             app.settings.set_boolean("ask-default", False)
-    
