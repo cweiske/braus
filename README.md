@@ -18,6 +18,28 @@ ninja install
 
 When you run braus for the first time, it will ask you whether you want to set it as your default browser. Ideally you should make it default to actually get the benefit of an app like this.
 
+
+### Add a browser profile
+To add a new entry to the Braus browser selector, create a `.desktop` file
+in `~/.local/share/applications/`.
+It needs to handle `MimeType`s of `x-scheme-handler/https`.
+
+Example:
+
+    [Desktop Entry]
+    Version=1.1
+    Type=Application
+    Name=Firefox Company
+    Icon=firefox-symbolic
+    Exec=firefox -P companyprofile %u
+    Actions=
+    Categories=WebBrowser;X-GNOME-WebApplications;
+    MimeType=text/html;text/xml;application/xhtml+xml;application/xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;x-scheme-handler/chrome;application/x-xpinstall;
+
+After creating the file, the desktop file cache needs to be updated:
+
+    $ update-desktop-database  ~/.local/share/applications/
+
 ---------------
 
 © 2020 Kavya Gokul
