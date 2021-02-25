@@ -6,5 +6,10 @@
 			<summary>Ask to be default</summary>
 			<description>Whether or not Braus should ask to be the default web browser</description>
 		</key>
+		<key name="domains" type="a{ss}">
+			<default>{}</default>
+			<summary>Domain-browser mapping</summary>
+			<description>Which domains shall be opened with which browser</description>
+		</key>
 	</schema>
 </schemalist>

@@ -16,6 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from gi.repository import Gtk, Gio, GLib, Pango, Gdk
+from urllib.parse import urlparse
 import sys
 
 class BrausWindow(Gtk.ApplicationWindow):
@@ -117,8 +118,10 @@ class BrausWindow(Gtk.ApplicationWindow):
         # Create a entry, put the url argument in the entry, and add to headerbar
         entry = Gtk.Entry()
         entry.set_icon_from_icon_name(Gtk.EntryIconPosition.PRIMARY, "system-search-symbolic")
+        url = None
         try:
-            entry.set_text(sys.argv[1])
+            url = sys.argv[1]
+            entry.set_text(url)
         except IndexError:
             print("No url provided")
 
@@ -243,6 +246,15 @@ class BrausWindow(Gtk.ApplicationWindow):
             #Connect the click signal, passing on all relevant data(browser and url)
             button.connect("clicked", self.launch_browser, appslist.get(browser.get_id()), uris, app)
 
+
+        if url:
+            domain = urlparse(url).netloc
+            browserId = app.settings.get_value('domains').lookup_value(domain)
+            if browserId:
+                #browserId is a GVariant
+                browser = appslist.get(browserId.get_string())
+                if browser:
+                    self.launch_browser(None, browser, [url], app)
 
 
     # Function to actually launch the browser
